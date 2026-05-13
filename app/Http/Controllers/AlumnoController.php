@@ -199,7 +199,12 @@ if ($request->has('tutor_diferente')) {
         return redirect()->route('alumnos.index')
             ->with('success', 'Expediente actualizado correctamente.');
     }
-
+    
+    public function print(Alumno $alumno)
+{
+    $alumno->load('padre', 'madre', 'tutor', 'documentoProbatorio', 'escuela', 'expediente');
+    return view('alumnos.print', compact('alumno'));
+}
     public function destroy(Alumno $alumno)
     {
         $alumno->delete();

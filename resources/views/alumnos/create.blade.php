@@ -230,12 +230,67 @@
                 <input type="text" name="padre_municipio" value="{{ old('padre_municipio') }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Localidad</label>
+                <input type="text" name="padre_localidad" value="{{ old('padre_localidad') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+        <div class="grid grid-cols-4 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">CP</label>
+                <input type="text" name="padre_cp" value="{{ old('padre_cp') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div class="col-span-3">
+                <label class="block text-xs font-medium text-gray-600 mb-1">Colonia</label>
+                <input type="text" name="padre_colonia" value="{{ old('padre_colonia') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+        <div class="grid grid-cols-4 gap-4 mb-4">
+            <div class="col-span-2">
+                <label class="block text-xs font-medium text-gray-600 mb-1">Calle</label>
+                <input type="text" name="padre_calle" value="{{ old('padre_calle') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Núm. Ext.</label>
+                <input type="text" name="padre_num_ext" value="{{ old('padre_num_ext') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Núm. Int.</label>
+                <input type="text" name="padre_num_int" value="{{ old('padre_num_int') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Horario</label>
+                <input type="text" name="padre_horario" value="{{ old('padre_horario') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">E-mail Trabajo</label>
+                <input type="email" name="padre_email_trabajo" value="{{ old('padre_email_trabajo') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+        <div class="grid grid-cols-3 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Trabajo</label>
+                <input type="text" name="padre_tel_trabajo" value="{{ old('padre_tel_trabajo') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Ext.</label>
+                <input type="text" name="padre_ext_trabajo" value="{{ old('padre_ext_trabajo') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
         </div>
         <div class="flex gap-6">
             <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="padre_vive" {{ old('padre_vive') ? 'checked' : '' }}> Vive con el alumno</label>
-            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="padre_es_tutor" {{ old('padre_es_tutor') ? 'checked' : '' }}> Es el tutor</label>
-            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="padre_es_finado" {{ old('padre_es_finado') ? 'checked' : '' }}> Es finado</label>
-        </div>
     </div>
 
     {{-- DATOS DE LA MADRE --}}
@@ -308,76 +363,294 @@
                 <input type="text" name="madre_ocupacion" value="{{ old('madre_ocupacion') }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
-            <div>
+           <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Municipio</label>
                 <input type="text" name="madre_municipio" value="{{ old('madre_municipio') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Localidad</label>
+                <input type="text" name="madre_localidad" value="{{ old('madre_localidad') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+        <div class="grid grid-cols-4 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">CP</label>
+                <input type="text" name="madre_cp" value="{{ old('madre_cp') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div class="col-span-3">
+                <label class="block text-xs font-medium text-gray-600 mb-1">Colonia</label>
+                <input type="text" name="madre_colonia" value="{{ old('madre_colonia') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+        <div class="grid grid-cols-4 gap-4 mb-4">
+            <div class="col-span-2">
+                <label class="block text-xs font-medium text-gray-600 mb-1">Calle</label>
+                <input type="text" name="madre_calle" value="{{ old('madre_calle') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Núm. Ext.</label>
+                <input type="text" name="madre_num_ext" value="{{ old('madre_num_ext') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Núm. Int.</label>
+                <input type="text" name="madre_num_int" value="{{ old('madre_num_int') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Horario</label>
+                <input type="text" name="madre_horario" value="{{ old('madre_horario') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">E-mail Trabajo</label>
+                <input type="email" name="madre_email_trabajo" value="{{ old('madre_email_trabajo') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+        <div class="grid grid-cols-3 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Trabajo</label>
+                <input type="text" name="madre_tel_trabajo" value="{{ old('madre_tel_trabajo') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Ext.</label>
+                <input type="text" name="madre_ext_trabajo" value="{{ old('madre_ext_trabajo') }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
         <div class="flex gap-6">
             <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="madre_vive" {{ old('madre_vive') ? 'checked' : '' }}> Vive con el alumno</label>
-            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="madre_es_tutor" {{ old('madre_es_tutor') ? 'checked' : '' }}> Es la tutora</label>
-            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="madre_es_finado" {{ old('madre_es_finado') ? 'checked' : '' }}> Es finada</label>
-        </div>
     </div>
 
     {{-- TUTOR DIFERENTE --}}
-    <div class="bg-white rounded-xl shadow p-6 mb-4">
-        <div class="flex items-center gap-3 mb-2">
-            <input type="checkbox" name="tutor_diferente" id="tutor_diferente"
-                {{ old('tutor_diferente') ? 'checked' : '' }} onchange="toggleTutor()">
-            <label for="tutor_diferente" class="font-bold text-sm text-gray-700 uppercase cursor-pointer">
-                El tutor es diferente al padre o madre
-            </label>
-        </div>
-        <div id="seccion_tutor" class="{{ old('tutor_diferente') ? '' : 'hidden' }}">
-            <h3 class="font-bold text-white bg-red-700 px-3 py-1 rounded mb-4 mt-4 text-sm uppercase">Datos del Tutor</h3>
-            <div class="grid grid-cols-3 gap-4 mb-4">
-                <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1">Apellido Paterno</label>
-                    <input type="text" name="tutor_apellido_paterno" value="{{ old('tutor_apellido_paterno') }}"
-                        class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1">Apellido Materno</label>
-                    <input type="text" name="tutor_apellido_materno" value="{{ old('tutor_apellido_materno') }}"
-                        class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1">Nombre(s)</label>
-                    <input type="text" name="tutor_nombre" value="{{ old('tutor_nombre') }}"
-                        class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                </div>
-            </div>
-            <div class="grid grid-cols-3 gap-4 mb-4">
-                <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1">Parentesco</label>
-                    <input type="text" name="tutor_parentesco" value="{{ old('tutor_parentesco') }}"
-                        class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1">
-                        CURP
-                        <a href="https://www.gob.mx/curp/" target="_blank"
-                           class="ml-1 text-blue-600 hover:text-blue-800 border border-blue-300 rounded px-1 text-xs font-normal">
-                            🔗 Consultar CURP
-                        </a>
-                    </label>
-                    <input type="text" name="tutor_curp" value="{{ old('tutor_curp') }}" maxlength="18"
-                        class="w-full border rounded-lg px-3 py-2 text-sm uppercase focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Celular</label>
-                    <input type="text" name="tutor_tel_celular" value="{{ old('tutor_tel_celular') }}"
-                        class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                </div>
-            </div>
-            <div class="flex gap-6">
-                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="tutor_vive" {{ old('tutor_vive') ? 'checked' : '' }}> Vive con el alumno</label>
-                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="tutor_legal" {{ old('tutor_legal') ? 'checked' : '' }}> Es tutor legal</label>
-            </div>
-        </div>
+<div class="bg-white rounded-xl shadow p-6 mb-4">
+    <div class="flex items-center gap-3 mb-2">
+        <input type="checkbox" name="tutor_diferente" id="tutor_diferente"
+            {{ old('tutor_diferente') ? 'checked' : '' }} onchange="toggleTutor()">
+        <label for="tutor_diferente" class="font-bold text-sm text-gray-700 uppercase cursor-pointer">
+            El tutor es diferente al padre o madre
+        </label>
     </div>
+
+    <div id="seccion_tutor" class="{{ old('tutor_diferente') ? '' : 'hidden' }}">
+        <h3 class="font-bold text-white bg-red-700 px-3 py-1 rounded mb-4 mt-4 text-sm uppercase">Datos del Tutor</h3>
+
+        {{-- Fila 1: Apellidos y Nombre + Parentesco --}}
+        <div class="grid grid-cols-4 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Apellido Paterno</label>
+                <input type="text" name="tutor_apellido_paterno" value="{{ old('tutor_apellido_paterno') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Apellido Materno</label>
+                <input type="text" name="tutor_apellido_materno" value="{{ old('tutor_apellido_materno') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Nombre(s)</label>
+                <input type="text" name="tutor_nombre" value="{{ old('tutor_nombre') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Parentesco</label>
+                <input type="text" name="tutor_parentesco" value="{{ old('tutor_parentesco') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+
+        {{-- Fila 2: CURP + Fecha de Nacimiento + País de Nacimiento + Nivel de Estudios --}}
+        <div class="grid grid-cols-4 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    CURP
+                    <a href="https://www.gob.mx/curp/" target="_blank"
+                       class="ml-1 text-blue-600 hover:text-blue-800 border border-blue-300 rounded px-1 text-xs font-normal">
+                        🔗 Consultar
+                    </a>
+                </label>
+                <input type="text" name="tutor_curp" value="{{ old('tutor_curp') }}" maxlength="18"
+                    class="w-full border rounded-lg px-3 py-2 text-sm uppercase focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Fecha de Nacimiento</label>
+                <input type="date" name="tutor_fecha_nacimiento" value="{{ old('tutor_fecha_nacimiento') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">País de Nacimiento</label>
+                <input type="text" name="tutor_pais_nacimiento" value="{{ old('tutor_pais_nacimiento', 'México') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Nivel de Estudios</label>
+                <select name="tutor_nivel_estudios"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <option value="">-- Seleccionar --</option>
+                    <option value="primaria"       {{ old('tutor_nivel_estudios') == 'primaria'       ? 'selected' : '' }}>Primaria</option>
+                    <option value="secundaria"     {{ old('tutor_nivel_estudios') == 'secundaria'     ? 'selected' : '' }}>Secundaria</option>
+                    <option value="preparatoria"   {{ old('tutor_nivel_estudios') == 'preparatoria'   ? 'selected' : '' }}>Preparatoria / Bachillerato</option>
+                    <option value="tecnico"        {{ old('tutor_nivel_estudios') == 'tecnico'        ? 'selected' : '' }}>Técnico</option>
+                    <option value="licenciatura"   {{ old('tutor_nivel_estudios') == 'licenciatura'   ? 'selected' : '' }}>Licenciatura</option>
+                    <option value="posgrado"       {{ old('tutor_nivel_estudios') == 'posgrado'       ? 'selected' : '' }}>Posgrado</option>
+                </select>
+            </div>
+        </div>
+
+        {{-- Fila 3: Vive con alumno + Tutor legal --}}
+        <div class="flex gap-8 mb-4">
+            <div>
+                <span class="block text-xs font-medium text-gray-600 mb-2">Vive con el alumno</span>
+                <div class="flex gap-4">
+                    <label class="flex items-center gap-2 text-sm">
+                        <input type="radio" name="tutor_vive_alumno" value="1" {{ old('tutor_vive_alumno') == '1' ? 'checked' : '' }}> Sí
+                    </label>
+                    <label class="flex items-center gap-2 text-sm">
+                        <input type="radio" name="tutor_vive_alumno" value="0" {{ old('tutor_vive_alumno') == '0' ? 'checked' : '' }}> No
+                    </label>
+                </div>
+            </div>
+            <div>
+                <span class="block text-xs font-medium text-gray-600 mb-2">¿Es tutor legal?</span>
+                <div class="flex gap-4">
+                    <label class="flex items-center gap-2 text-sm">
+                        <input type="radio" name="tutor_es_legal" value="1" {{ old('tutor_es_legal') == '1' ? 'checked' : '' }}> Sí
+                    </label>
+                    <label class="flex items-center gap-2 text-sm">
+                        <input type="radio" name="tutor_es_legal" value="0" {{ old('tutor_es_legal') == '0' ? 'checked' : '' }}> No
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        {{-- DIRECCIÓN --}}
+        <h4 class="font-bold text-sm text-gray-700 uppercase mb-3 border-b pb-1">Dirección</h4>
+
+        {{-- Fila 4: País de residencia + Entidad --}}
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">País de Residencia</label>
+                <input type="text" name="tutor_pais_residencia" value="{{ old('tutor_pais_residencia', 'México') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Entidad</label>
+                <input type="text" name="tutor_entidad" value="{{ old('tutor_entidad') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+
+        {{-- Fila 5: Municipio + Localidad --}}
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Municipio</label>
+                <input type="text" name="tutor_municipio" value="{{ old('tutor_municipio') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Localidad</label>
+                <input type="text" name="tutor_localidad" value="{{ old('tutor_localidad') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+
+        {{-- Fila 6: CP + Colonia --}}
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">CP</label>
+                <input type="text" name="tutor_cp" value="{{ old('tutor_cp') }}" maxlength="5"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Colonia</label>
+                <input type="text" name="tutor_colonia" value="{{ old('tutor_colonia') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+
+        {{-- Fila 7: Calle + Núm. Ext + Núm. Int --}}
+        <div class="grid grid-cols-3 gap-4 mb-4">
+            <div class="col-span-1">
+                <label class="block text-xs font-medium text-gray-600 mb-1">Calle</label>
+                <input type="text" name="tutor_calle" value="{{ old('tutor_calle') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Núm. Ext.</label>
+                <input type="text" name="tutor_num_ext" value="{{ old('tutor_num_ext') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Núm. Int.</label>
+                <input type="text" name="tutor_num_int" value="{{ old('tutor_num_int') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+
+        {{-- Fila 8: Tel. Fijo + Tel. Celular + E-mail --}}
+        <div class="grid grid-cols-3 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Fijo</label>
+                <input type="text" name="tutor_tel_fijo" value="{{ old('tutor_tel_fijo') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Celular</label>
+                <input type="text" name="tutor_tel_celular" value="{{ old('tutor_tel_celular') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">E-mail</label>
+                <input type="email" name="tutor_email" value="{{ old('tutor_email') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+
+        {{-- Fila 9: Ocupación + Horario --}}
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Ocupación</label>
+                <input type="text" name="tutor_ocupacion" value="{{ old('tutor_ocupacion') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Horario</label>
+                <input type="text" name="tutor_horario" value="{{ old('tutor_horario') }}"
+                    placeholder="Ej. 8:00 - 17:00"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+
+        {{-- Fila 10: Tel. Trabajo + Ext + E-mail Trabajo --}}
+        <div class="grid grid-cols-3 gap-4 mb-2">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Trabajo</label>
+                <input type="text" name="tutor_tel_trabajo" value="{{ old('tutor_tel_trabajo') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Ext.</label>
+                <input type="text" name="tutor_ext_trabajo" value="{{ old('tutor_ext_trabajo') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">E-mail Trabajo</label>
+                <input type="email" name="tutor_email_trabajo" value="{{ old('tutor_email_trabajo') }}"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+        </div>
+
+    </div>
+</div>
 
     {{-- DOCUMENTO PROBATORIO (sección independiente) --}}
     <div class="bg-white rounded-xl shadow p-6 mb-4">

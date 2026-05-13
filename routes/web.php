@@ -38,7 +38,8 @@ Route::middleware('auth')->group(function () {
 
     // Secretaria, subdirector y director pueden gestionar alumnos
     Route::middleware('rol:secretaria,subdirector,director')->group(function () {
-        Route::resource('alumnos', AlumnoController::class);
+        Route::get('alumnos/{alumno}/print', [AlumnoController::class, 'print'])->name('alumnos.print');
+Route::resource('alumnos', AlumnoController::class);
     });
 
     // Solo director y subdirector validan expedientes
