@@ -12,15 +12,16 @@ return new class extends Migration
   public function up(): void
 {
     Schema::create('dato_escuelas', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('alumno_id')->constrained('alumnos')->onDelete('cascade');
-        $table->string('nombre_escuela');
-        $table->string('cct')->nullable();
-        $table->enum('turno', ['matutino', 'vespertino', 'nocturno'])->nullable();
-        $table->string('grado');
-        $table->string('grupo')->nullable();
-        $table->string('ze')->nullable();
-        $table->timestamps();
+       $table->id();
+$table->foreignId('alumno_id')->constrained('alumnos')->onDelete('cascade');
+$table->string('nombre_escuela');
+$table->string('nivel')->default('primaria');
+$table->string('cct')->nullable();
+$table->enum('turno', ['matutino', 'vespertino', 'nocturno'])->nullable();
+$table->string('grado');
+$table->string('grupo')->nullable();
+$table->string('ze')->nullable();
+$table->timestamps();
     });
 }
 

@@ -51,7 +51,6 @@ class AlumnoController extends Controller
         $alumno = Alumno::create([
             'ciclo_escolar'      => $request->ciclo_escolar,
             'fecha_cedula'       => $request->fecha_cedula,
-            'nia'                => $request->nia,
             'apellido_paterno'   => $request->apellido_paterno,
             'apellido_materno'   => $request->apellido_materno,
             'nombre'             => $request->nombre,
@@ -120,16 +119,19 @@ class AlumnoController extends Controller
         }
 
         // 5. Documento probatorio
-        $alumno->documentoProbatorio()->create([
-            'entidad_fed_registro' => $request->entidad_fed_registro,
-            'municipio_registro'   => $request->municipio_registro,
-            'año_registro'         => $request->año_registro,
-            'tipo_documento'       => $request->tipo_documento,
-            'num_libro'            => $request->num_libro,
-            'num_acta'             => $request->num_acta,
-            'crip'                 => $request->crip,
-            'observaciones'        => $request->doc_observaciones,
-        ]);
+        // 5. Documento probatorio (solo si tutor diferente)
+if ($request->has('tutor_diferente')) {
+    $alumno->documentoProbatorio()->create([
+        'entidad_fed_registro' => $request->entidad_fed_registro,
+        'municipio_registro'   => $request->municipio_registro,
+        'año_registro'         => $request->año_registro,
+        'tipo_documento'       => $request->tipo_documento,
+        'num_libro'            => $request->num_libro,
+        'num_acta'             => $request->num_acta,
+        'crip'                 => $request->crip,
+        'observaciones'        => $request->doc_observaciones,
+    ]);
+}
 
         // 6. Datos escuela
         $alumno->escuela()->create([
