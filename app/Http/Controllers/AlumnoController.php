@@ -29,6 +29,8 @@ class AlumnoController extends Controller
 
     public function store(Request $request)
     {
+        $fechaAlumno = $request->fecha_nacimiento;
+
         $request->validate([
             'ciclo_escolar'          => 'required|string',
             'fecha_cedula'           => 'required|date',
@@ -36,15 +38,32 @@ class AlumnoController extends Controller
             'apellido_materno'       => 'required|string|max:100',
             'nombre'                 => 'required|string|max:100',
             'curp'                   => 'required|string|size:18|unique:alumnos',
-            'fecha_nacimiento'       => 'required|date',
+            'fecha_nacimiento'       => 'required|date|before:today',
             'entidad_nacimiento'     => 'required|string',
             'genero'                 => 'required|in:H,M',
             'padre_apellido_paterno' => 'required|string',
             'padre_nombre'           => 'required|string',
+            'padre_fecha_nacimiento' => [
+                'nullable', 'date',
+                'before:' . $fechaAlumno,
+            ],
             'madre_apellido_paterno' => 'required|string',
             'madre_nombre'           => 'required|string',
+            'madre_fecha_nacimiento' => [
+                'nullable', 'date',
+                'before:' . $fechaAlumno,
+            ],
+            'tutor_fecha_nacimiento' => [
+                'nullable', 'date',
+                'before:' . $fechaAlumno,
+            ],
             'nombre_escuela'         => 'required|string',
             'grado'                  => 'required|string',
+        ], [
+            'padre_fecha_nacimiento.before' => 'La fecha de nacimiento del padre debe ser anterior a la del alumno.',
+            'madre_fecha_nacimiento.before' => 'La fecha de nacimiento de la madre debe ser anterior a la del alumno.',
+            'tutor_fecha_nacimiento.before' => 'La fecha de nacimiento del tutor debe ser anterior a la del alumno.',
+            'fecha_nacimiento.before'       => 'La fecha de nacimiento del alumno no puede ser en el futuro.',
         ]);
 
         // 1. Alumno
