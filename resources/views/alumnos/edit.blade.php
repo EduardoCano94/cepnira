@@ -1,11 +1,11 @@
 @extends('layouts.app')
-@section('titulo', 'Nueva Cédula')
+@section('titulo', 'Editar Cédula')
 
 @section('content')
 <div class="max-w-4xl mx-auto">
 
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Nueva Cédula de Registro</h2>
+        <h2 class="text-2xl font-bold text-gray-800">Editar Cédula de Registro</h2>
         <a href="{{ route('alumnos.index') }}" class="text-sm text-gray-500 hover:underline">← Volver</a>
     </div>
 
@@ -37,23 +37,24 @@
         'secundaria'   => ['1°','2°','3°'],
         'preparatoria' => ['1°','2°','3°'],
     ];
-    $nivelActual = old('nivel', 'primaria');
+    $nivelActual = old('nivel', 'primaria'); // En edit se podría derivar del grado, primaria es default
     @endphp
 
-    <form method="POST" action="{{ route('alumnos.store') }}">
+    <form method="POST" action="{{ route('alumnos.update', $alumno) }}">
     @csrf
+    @method('PUT')
 
     {{-- ENCABEZADO --}}
     <div class="bg-white rounded-xl shadow p-6 mb-4">
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Ciclo Escolar *</label>
-                <input type="text" name="ciclo_escolar" value="{{ old('ciclo_escolar', '2025-2026') }}"
+                <input type="text" name="ciclo_escolar" value="{{ old('ciclo_escolar', $alumno->ciclo_escolar) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Fecha</label>
-                <input type="date" name="fecha_cedula" value="{{ old('fecha_cedula', date('Y-m-d')) }}"
+                <input type="date" name="fecha_cedula" value="{{ old('fecha_cedula', $alumno->fecha_cedula) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -65,17 +66,17 @@
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Apellido Paterno *</label>
-                <input type="text" name="apellido_paterno" value="{{ old('apellido_paterno') }}"
+                <input type="text" name="apellido_paterno" value="{{ old('apellido_paterno', $alumno->apellido_paterno) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Apellido Materno *</label>
-                <input type="text" name="apellido_materno" value="{{ old('apellido_materno') }}"
+                <input type="text" name="apellido_materno" value="{{ old('apellido_materno', $alumno->apellido_materno) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Nombre(s) *</label>
-                <input type="text" name="nombre" value="{{ old('nombre') }}"
+                <input type="text" name="nombre" value="{{ old('nombre', $alumno->nombre) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -88,20 +89,20 @@
                         🔗 Consultar CURP
                     </a>
                 </label>
-                <input type="text" name="curp" value="{{ old('curp') }}" maxlength="18"
+                <input type="text" name="curp" value="{{ old('curp', $alumno->curp) }}" maxlength="18"
                     class="w-full border rounded-lg px-3 py-2 text-sm uppercase focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Fecha de Nacimiento *</label>
-                <input type="date" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}"
+                <input type="date" name="fecha_nacimiento" value="{{ old('fecha_nacimiento', $alumno->fecha_nacimiento) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Género *</label>
                 <select name="genero" class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     <option value="">Seleccionar</option>
-                    <option value="H" {{ old('genero')=='H' ? 'selected' : '' }}>H — Hombre</option>
-                    <option value="M" {{ old('genero')=='M' ? 'selected' : '' }}>M — Mujer</option>
+                    <option value="H" {{ old('genero', $alumno->genero)=='H' ? 'selected' : '' }}>H — Hombre</option>
+                    <option value="M" {{ old('genero', $alumno->genero)=='M' ? 'selected' : '' }}>M — Mujer</option>
                 </select>
             </div>
         </div>
@@ -110,8 +111,8 @@
                 <label class="block text-xs font-medium text-gray-600 mb-1">País de Nacimiento</label>
                 <select name="pais_nacimiento" id="pais_nacimiento" onchange="toggleEstados()"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                    <option value="México" {{ old('pais_nacimiento','México')=='México' ? 'selected' : '' }}>México</option>
-                    <option value="Otro" {{ old('pais_nacimiento')=='Otro' ? 'selected' : '' }}>Otro país</option>
+                    <option value="México" {{ old('pais_nacimiento', $alumno->pais_nacimiento)=='México' ? 'selected' : '' }}>México</option>
+                    <option value="Otro" {{ old('pais_nacimiento', $alumno->pais_nacimiento)=='Otro' ? 'selected' : '' }}>Otro país</option>
                 </select>
             </div>
             <div>
@@ -120,11 +121,11 @@
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     <option value="">Seleccionar estado</option>
                     @foreach($estados as $estado)
-                        <option value="{{ $estado }}" {{ old('entidad_nacimiento')==$estado ? 'selected' : '' }}>{{ $estado }}</option>
+                        <option value="{{ $estado }}" {{ old('entidad_nacimiento', $alumno->entidad_nacimiento)==$estado ? 'selected' : '' }}>{{ $estado }}</option>
                     @endforeach
                 </select>
                 <input type="text" name="entidad_nacimiento_texto" id="entidad_nacimiento_texto"
-                    placeholder="Escriba el país de nacimiento" value="{{ old('entidad_nacimiento_texto') }}"
+                    placeholder="Escriba el país de nacimiento" value="{{ old('entidad_nacimiento_texto', $alumno->entidad_nacimiento) }}"
                     class="hidden w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none mt-1">
             </div>
             <div>
@@ -132,7 +133,7 @@
                 <select name="tipo_sangre" class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     <option value="">Seleccionar</option>
                     @foreach($tiposSangre as $tipo)
-                        <option value="{{ $tipo }}" {{ old('tipo_sangre')==$tipo ? 'selected' : '' }}>{{ $tipo }}</option>
+                        <option value="{{ $tipo }}" {{ old('tipo_sangre', $alumno->tipo_sangre)==$tipo ? 'selected' : '' }}>{{ $tipo }}</option>
                     @endforeach
                 </select>
             </div>
@@ -143,13 +144,13 @@
                 <select name="lengua_materna" class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     <option value="">Seleccionar</option>
                     @foreach($lenguasMaternas as $lengua)
-                        <option value="{{ $lengua }}" {{ old('lengua_materna')==$lengua ? 'selected' : '' }}>{{ $lengua }}</option>
+                        <option value="{{ $lengua }}" {{ old('lengua_materna', $alumno->lengua_materna)==$lengua ? 'selected' : '' }}>{{ $lengua }}</option>
                     @endforeach
                 </select>
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Discapacidad / Aptitud diferenciada</label>
-                <input type="text" name="discapacidad" value="{{ old('discapacidad') }}" placeholder="Especificar o dejar vacío"
+                <input type="text" name="discapacidad" value="{{ old('discapacidad', $alumno->discapacidad) }}" placeholder="Especificar o dejar vacío"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -161,17 +162,17 @@
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Apellido Paterno *</label>
-                <input type="text" name="padre_apellido_paterno" value="{{ old('padre_apellido_paterno') }}"
+                <input type="text" name="padre_apellido_paterno" value="{{ old('padre_apellido_paterno', $alumno->padre?->apellido_paterno) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Apellido Materno</label>
-                <input type="text" name="padre_apellido_materno" value="{{ old('padre_apellido_materno') }}"
+                <input type="text" name="padre_apellido_materno" value="{{ old('padre_apellido_materno', $alumno->padre?->apellido_materno) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Nombre(s) *</label>
-                <input type="text" name="padre_nombre" value="{{ old('padre_nombre') }}"
+                <input type="text" name="padre_nombre" value="{{ old('padre_nombre', $alumno->padre?->nombre) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -184,12 +185,12 @@
                         🔗 Consultar CURP
                     </a>
                 </label>
-                <input type="text" name="padre_curp" value="{{ old('padre_curp') }}" maxlength="18"
+                <input type="text" name="padre_curp" value="{{ old('padre_curp', $alumno->padre?->curp) }}" maxlength="18"
                     class="w-full border rounded-lg px-3 py-2 text-sm uppercase focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Fecha de Nacimiento</label>
-                <input type="date" name="padre_fecha_nacimiento" value="{{ old('padre_fecha_nacimiento') }}"
+                <input type="date" name="padre_fecha_nacimiento" value="{{ old('padre_fecha_nacimiento', $alumno->padre?->fecha_nacimiento) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
@@ -197,7 +198,7 @@
                 <select name="padre_nivel_estudios" class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     <option value="">Seleccionar</option>
                     @foreach($nivelesEstudio as $nivel)
-                        <option value="{{ $nivel }}" {{ old('padre_nivel_estudios')==$nivel ? 'selected' : '' }}>{{ $nivel }}</option>
+                        <option value="{{ $nivel }}" {{ old('padre_nivel_estudios', $alumno->padre?->nivel_estudios)==$nivel ? 'selected' : '' }}>{{ $nivel }}</option>
                     @endforeach
                 </select>
             </div>
@@ -205,92 +206,92 @@
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Celular</label>
-                <input type="text" name="padre_tel_celular" value="{{ old('padre_tel_celular') }}"
+                <input type="text" name="padre_tel_celular" value="{{ old('padre_tel_celular', $alumno->padre?->tel_celular) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Fijo</label>
-                <input type="text" name="padre_tel_fijo" value="{{ old('padre_tel_fijo') }}"
+                <input type="text" name="padre_tel_fijo" value="{{ old('padre_tel_fijo', $alumno->padre?->tel_fijo) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Correo electrónico</label>
-                <input type="email" name="padre_email" value="{{ old('padre_email') }}"
+                <input type="email" name="padre_email" value="{{ old('padre_email', $alumno->padre?->email) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Ocupación</label>
-                <input type="text" name="padre_ocupacion" value="{{ old('padre_ocupacion') }}"
+                <input type="text" name="padre_ocupacion" value="{{ old('padre_ocupacion', $alumno->padre?->ocupacion) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Municipio</label>
-                <input type="text" name="padre_municipio" value="{{ old('padre_municipio') }}"
+                <input type="text" name="padre_municipio" value="{{ old('padre_municipio', $alumno->padre?->municipio) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Localidad</label>
-                <input type="text" name="padre_localidad" value="{{ old('padre_localidad') }}"
+                <input type="text" name="padre_localidad" value="{{ old('padre_localidad', $alumno->padre?->localidad) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
         <div class="grid grid-cols-4 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">CP</label>
-                <input type="text" name="padre_cp" value="{{ old('padre_cp') }}"
+                <input type="text" name="padre_cp" value="{{ old('padre_cp', $alumno->padre?->cp) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div class="col-span-3">
                 <label class="block text-xs font-medium text-gray-600 mb-1">Colonia</label>
-                <input type="text" name="padre_colonia" value="{{ old('padre_colonia') }}"
+                <input type="text" name="padre_colonia" value="{{ old('padre_colonia', $alumno->padre?->colonia) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
         <div class="grid grid-cols-4 gap-4 mb-4">
             <div class="col-span-2">
                 <label class="block text-xs font-medium text-gray-600 mb-1">Calle</label>
-                <input type="text" name="padre_calle" value="{{ old('padre_calle') }}"
+                <input type="text" name="padre_calle" value="{{ old('padre_calle', $alumno->padre?->calle) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Núm. Ext.</label>
-                <input type="text" name="padre_num_ext" value="{{ old('padre_num_ext') }}"
+                <input type="text" name="padre_num_ext" value="{{ old('padre_num_ext', $alumno->padre?->num_ext) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Núm. Int.</label>
-                <input type="text" name="padre_num_int" value="{{ old('padre_num_int') }}"
+                <input type="text" name="padre_num_int" value="{{ old('padre_num_int', $alumno->padre?->num_int) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Horario</label>
-                <input type="text" name="padre_horario" value="{{ old('padre_horario') }}"
+                <input type="text" name="padre_horario" value="{{ old('padre_horario', $alumno->padre?->horario) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">E-mail Trabajo</label>
-                <input type="email" name="padre_email_trabajo" value="{{ old('padre_email_trabajo') }}"
+                <input type="email" name="padre_email_trabajo" value="{{ old('padre_email_trabajo', $alumno->padre?->email_trabajo) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Trabajo</label>
-                <input type="text" name="padre_tel_trabajo" value="{{ old('padre_tel_trabajo') }}"
+                <input type="text" name="padre_tel_trabajo" value="{{ old('padre_tel_trabajo', $alumno->padre?->tel_trabajo) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Ext.</label>
-                <input type="text" name="padre_ext_trabajo" value="{{ old('padre_ext_trabajo') }}"
+                <input type="text" name="padre_ext_trabajo" value="{{ old('padre_ext_trabajo', $alumno->padre?->ext_trabajo) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
         <div class="flex gap-6">
-            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="padre_vive" {{ old('padre_vive') ? 'checked' : '' }}> Vive con el alumno</label>
+            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="padre_vive" {{ old('padre_vive', $alumno->padre?->vive_con_alumno) ? 'checked' : '' }}> Vive con el alumno</label>
     </div>
 
     {{-- DATOS DE LA MADRE --}}
@@ -299,17 +300,17 @@
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Apellido Paterno *</label>
-                <input type="text" name="madre_apellido_paterno" value="{{ old('madre_apellido_paterno') }}"
+                <input type="text" name="madre_apellido_paterno" value="{{ old('madre_apellido_paterno', $alumno->madre?->apellido_paterno) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Apellido Materno</label>
-                <input type="text" name="madre_apellido_materno" value="{{ old('madre_apellido_materno') }}"
+                <input type="text" name="madre_apellido_materno" value="{{ old('madre_apellido_materno', $alumno->madre?->apellido_materno) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Nombre(s) *</label>
-                <input type="text" name="madre_nombre" value="{{ old('madre_nombre') }}"
+                <input type="text" name="madre_nombre" value="{{ old('madre_nombre', $alumno->madre?->nombre) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -322,12 +323,12 @@
                         🔗 Consultar CURP
                     </a>
                 </label>
-                <input type="text" name="madre_curp" value="{{ old('madre_curp') }}" maxlength="18"
+                <input type="text" name="madre_curp" value="{{ old('madre_curp', $alumno->madre?->curp) }}" maxlength="18"
                     class="w-full border rounded-lg px-3 py-2 text-sm uppercase focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Fecha de Nacimiento</label>
-                <input type="date" name="madre_fecha_nacimiento" value="{{ old('madre_fecha_nacimiento') }}"
+                <input type="date" name="madre_fecha_nacimiento" value="{{ old('madre_fecha_nacimiento', $alumno->madre?->fecha_nacimiento) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
@@ -335,7 +336,7 @@
                 <select name="madre_nivel_estudios" class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     <option value="">Seleccionar</option>
                     @foreach($nivelesEstudio as $nivel)
-                        <option value="{{ $nivel }}" {{ old('madre_nivel_estudios')==$nivel ? 'selected' : '' }}>{{ $nivel }}</option>
+                        <option value="{{ $nivel }}" {{ old('madre_nivel_estudios', $alumno->madre?->nivel_estudios)==$nivel ? 'selected' : '' }}>{{ $nivel }}</option>
                     @endforeach
                 </select>
             </div>
@@ -343,127 +344,127 @@
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Celular</label>
-                <input type="text" name="madre_tel_celular" value="{{ old('madre_tel_celular') }}"
+                <input type="text" name="madre_tel_celular" value="{{ old('madre_tel_celular', $alumno->madre?->tel_celular) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Fijo</label>
-                <input type="text" name="madre_tel_fijo" value="{{ old('madre_tel_fijo') }}"
+                <input type="text" name="madre_tel_fijo" value="{{ old('madre_tel_fijo', $alumno->madre?->tel_fijo) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Correo electrónico</label>
-                <input type="email" name="madre_email" value="{{ old('madre_email') }}"
+                <input type="email" name="madre_email" value="{{ old('madre_email', $alumno->madre?->email) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Ocupación</label>
-                <input type="text" name="madre_ocupacion" value="{{ old('madre_ocupacion') }}"
+                <input type="text" name="madre_ocupacion" value="{{ old('madre_ocupacion', $alumno->madre?->ocupacion) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
            <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Municipio</label>
-                <input type="text" name="madre_municipio" value="{{ old('madre_municipio') }}"
+                <input type="text" name="madre_municipio" value="{{ old('madre_municipio', $alumno->madre?->municipio) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Localidad</label>
-                <input type="text" name="madre_localidad" value="{{ old('madre_localidad') }}"
+                <input type="text" name="madre_localidad" value="{{ old('madre_localidad', $alumno->madre?->localidad) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
         <div class="grid grid-cols-4 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">CP</label>
-                <input type="text" name="madre_cp" value="{{ old('madre_cp') }}"
+                <input type="text" name="madre_cp" value="{{ old('madre_cp', $alumno->madre?->cp) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div class="col-span-3">
                 <label class="block text-xs font-medium text-gray-600 mb-1">Colonia</label>
-                <input type="text" name="madre_colonia" value="{{ old('madre_colonia') }}"
+                <input type="text" name="madre_colonia" value="{{ old('madre_colonia', $alumno->madre?->colonia) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
         <div class="grid grid-cols-4 gap-4 mb-4">
             <div class="col-span-2">
                 <label class="block text-xs font-medium text-gray-600 mb-1">Calle</label>
-                <input type="text" name="madre_calle" value="{{ old('madre_calle') }}"
+                <input type="text" name="madre_calle" value="{{ old('madre_calle', $alumno->madre?->calle) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Núm. Ext.</label>
-                <input type="text" name="madre_num_ext" value="{{ old('madre_num_ext') }}"
+                <input type="text" name="madre_num_ext" value="{{ old('madre_num_ext', $alumno->madre?->num_ext) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Núm. Int.</label>
-                <input type="text" name="madre_num_int" value="{{ old('madre_num_int') }}"
+                <input type="text" name="madre_num_int" value="{{ old('madre_num_int', $alumno->madre?->num_int) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Horario</label>
-                <input type="text" name="madre_horario" value="{{ old('madre_horario') }}"
+                <input type="text" name="madre_horario" value="{{ old('madre_horario', $alumno->madre?->horario) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">E-mail Trabajo</label>
-                <input type="email" name="madre_email_trabajo" value="{{ old('madre_email_trabajo') }}"
+                <input type="email" name="madre_email_trabajo" value="{{ old('madre_email_trabajo', $alumno->madre?->email_trabajo) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Trabajo</label>
-                <input type="text" name="madre_tel_trabajo" value="{{ old('madre_tel_trabajo') }}"
+                <input type="text" name="madre_tel_trabajo" value="{{ old('madre_tel_trabajo', $alumno->madre?->tel_trabajo) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Ext.</label>
-                <input type="text" name="madre_ext_trabajo" value="{{ old('madre_ext_trabajo') }}"
+                <input type="text" name="madre_ext_trabajo" value="{{ old('madre_ext_trabajo', $alumno->madre?->ext_trabajo) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
         <div class="flex gap-6">
-            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="madre_vive" {{ old('madre_vive') ? 'checked' : '' }}> Vive con el alumno</label>
+            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="madre_vive" {{ old('madre_vive', $alumno->madre?->vive_con_alumno) ? 'checked' : '' }}> Vive con el alumno</label>
     </div>
 
     {{-- TUTOR DIFERENTE --}}
 <div class="bg-white rounded-xl shadow p-6 mb-4">
     <div class="flex items-center gap-3 mb-2">
         <input type="checkbox" name="tutor_diferente" id="tutor_diferente"
-            {{ old('tutor_diferente') ? 'checked' : '' }} onchange="toggleTutor()">
+            {{ old('tutor_diferente', $alumno->tutor ? '1' : '') ? 'checked' : '' }} onchange="toggleTutor()">
         <label for="tutor_diferente" class="font-bold text-sm text-gray-700 uppercase cursor-pointer">
             El tutor es diferente al padre o madre
         </label>
     </div>
 
-    <div id="seccion_tutor" class="{{ old('tutor_diferente') ? '' : 'hidden' }}">
+    <div id="seccion_tutor" class="{{ old('tutor_diferente', $alumno->tutor ? '1' : '') ? '' : 'hidden' }}">
         <h3 class="font-bold text-white bg-red-700 px-3 py-1 rounded mb-4 mt-4 text-sm uppercase">Datos del Tutor</h3>
 
         {{-- Fila 1: Apellidos y Nombre + Parentesco --}}
         <div class="grid grid-cols-4 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Apellido Paterno</label>
-                <input type="text" name="tutor_apellido_paterno" value="{{ old('tutor_apellido_paterno') }}"
+                <input type="text" name="tutor_apellido_paterno" value="{{ old('tutor_apellido_paterno', $alumno->tutor?->apellido_paterno) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Apellido Materno</label>
-                <input type="text" name="tutor_apellido_materno" value="{{ old('tutor_apellido_materno') }}"
+                <input type="text" name="tutor_apellido_materno" value="{{ old('tutor_apellido_materno', $alumno->tutor?->apellido_materno) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Nombre(s)</label>
-                <input type="text" name="tutor_nombre" value="{{ old('tutor_nombre') }}"
+                <input type="text" name="tutor_nombre" value="{{ old('tutor_nombre', $alumno->tutor?->nombre) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Parentesco</label>
-                <input type="text" name="tutor_parentesco" value="{{ old('tutor_parentesco') }}"
+                <input type="text" name="tutor_parentesco" value="{{ old('tutor_parentesco', $alumno->tutor?->parentesco) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -478,17 +479,17 @@
                         🔗 Consultar
                     </a>
                 </label>
-                <input type="text" name="tutor_curp" value="{{ old('tutor_curp') }}" maxlength="18"
+                <input type="text" name="tutor_curp" value="{{ old('tutor_curp', $alumno->tutor?->curp) }}" maxlength="18"
                     class="w-full border rounded-lg px-3 py-2 text-sm uppercase focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Fecha de Nacimiento</label>
-                <input type="date" name="tutor_fecha_nacimiento" value="{{ old('tutor_fecha_nacimiento') }}"
+                <input type="date" name="tutor_fecha_nacimiento" value="{{ old('tutor_fecha_nacimiento', $alumno->tutor?->fecha_nacimiento) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">País de Nacimiento</label>
-                <input type="text" name="tutor_pais_nacimiento" value="{{ old('tutor_pais_nacimiento', 'México') }}"
+                <input type="text" name="tutor_pais_nacimiento" value="{{ old('tutor_pais_nacimiento', $alumno->tutor?->pais_nacimiento ?? 'México') }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
@@ -496,12 +497,12 @@
                 <select name="tutor_nivel_estudios"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     <option value="">-- Seleccionar --</option>
-                    <option value="primaria"       {{ old('tutor_nivel_estudios') == 'primaria'       ? 'selected' : '' }}>Primaria</option>
-                    <option value="secundaria"     {{ old('tutor_nivel_estudios') == 'secundaria'     ? 'selected' : '' }}>Secundaria</option>
-                    <option value="preparatoria"   {{ old('tutor_nivel_estudios') == 'preparatoria'   ? 'selected' : '' }}>Preparatoria / Bachillerato</option>
-                    <option value="tecnico"        {{ old('tutor_nivel_estudios') == 'tecnico'        ? 'selected' : '' }}>Técnico</option>
-                    <option value="licenciatura"   {{ old('tutor_nivel_estudios') == 'licenciatura'   ? 'selected' : '' }}>Licenciatura</option>
-                    <option value="posgrado"       {{ old('tutor_nivel_estudios') == 'posgrado'       ? 'selected' : '' }}>Posgrado</option>
+                    <option value="primaria"       {{ old('tutor_nivel_estudios', $alumno->tutor?->nivel_estudios) == 'primaria'       ? 'selected' : '' }}>Primaria</option>
+                    <option value="secundaria"     {{ old('tutor_nivel_estudios', $alumno->tutor?->nivel_estudios) == 'secundaria'     ? 'selected' : '' }}>Secundaria</option>
+                    <option value="preparatoria"   {{ old('tutor_nivel_estudios', $alumno->tutor?->nivel_estudios) == 'preparatoria'   ? 'selected' : '' }}>Preparatoria / Bachillerato</option>
+                    <option value="tecnico"        {{ old('tutor_nivel_estudios', $alumno->tutor?->nivel_estudios) == 'tecnico'        ? 'selected' : '' }}>Técnico</option>
+                    <option value="licenciatura"   {{ old('tutor_nivel_estudios', $alumno->tutor?->nivel_estudios) == 'licenciatura'   ? 'selected' : '' }}>Licenciatura</option>
+                    <option value="posgrado"       {{ old('tutor_nivel_estudios', $alumno->tutor?->nivel_estudios) == 'posgrado'       ? 'selected' : '' }}>Posgrado</option>
                 </select>
             </div>
         </div>
@@ -512,10 +513,10 @@
                 <span class="block text-xs font-medium text-gray-600 mb-2">Vive con el alumno</span>
                 <div class="flex gap-4">
                     <label class="flex items-center gap-2 text-sm">
-                        <input type="radio" name="tutor_vive_alumno" value="1" {{ old('tutor_vive_alumno') == '1' ? 'checked' : '' }}> Sí
+                        <input type="radio" name="tutor_vive_alumno" value="1" {{ old('tutor_vive_alumno', $alumno->tutor?->vive_con_alumno ? '1' : '0') == '1' ? 'checked' : '' }}> Sí
                     </label>
                     <label class="flex items-center gap-2 text-sm">
-                        <input type="radio" name="tutor_vive_alumno" value="0" {{ old('tutor_vive_alumno') == '0' ? 'checked' : '' }}> No
+                        <input type="radio" name="tutor_vive_alumno" value="0" {{ old('tutor_vive_alumno', $alumno->tutor?->vive_con_alumno ? '1' : '0') == '0' ? 'checked' : '' }}> No
                     </label>
                 </div>
             </div>
@@ -523,10 +524,10 @@
                 <span class="block text-xs font-medium text-gray-600 mb-2">¿Es tutor legal?</span>
                 <div class="flex gap-4">
                     <label class="flex items-center gap-2 text-sm">
-                        <input type="radio" name="tutor_es_legal" value="1" {{ old('tutor_es_legal') == '1' ? 'checked' : '' }}> Sí
+                        <input type="radio" name="tutor_es_legal" value="1" {{ old('tutor_es_legal', $alumno->tutor?->es_tutor_legal ? '1' : '0') == '1' ? 'checked' : '' }}> Sí
                     </label>
                     <label class="flex items-center gap-2 text-sm">
-                        <input type="radio" name="tutor_es_legal" value="0" {{ old('tutor_es_legal') == '0' ? 'checked' : '' }}> No
+                        <input type="radio" name="tutor_es_legal" value="0" {{ old('tutor_es_legal', $alumno->tutor?->es_tutor_legal ? '1' : '0') == '0' ? 'checked' : '' }}> No
                     </label>
                 </div>
             </div>
@@ -539,12 +540,12 @@
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">País de Residencia</label>
-                <input type="text" name="tutor_pais_residencia" value="{{ old('tutor_pais_residencia', 'México') }}"
+                <input type="text" name="tutor_pais_residencia" value="{{ old('tutor_pais_residencia', $alumno->tutor?->pais_residencia ?? 'México') }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Entidad</label>
-                <input type="text" name="tutor_entidad" value="{{ old('tutor_entidad') }}"
+                <input type="text" name="tutor_entidad" value="{{ old('tutor_entidad', $alumno->tutor?->entidad) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -553,12 +554,12 @@
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Municipio</label>
-                <input type="text" name="tutor_municipio" value="{{ old('tutor_municipio') }}"
+                <input type="text" name="tutor_municipio" value="{{ old('tutor_municipio', $alumno->tutor?->municipio) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Localidad</label>
-                <input type="text" name="tutor_localidad" value="{{ old('tutor_localidad') }}"
+                <input type="text" name="tutor_localidad" value="{{ old('tutor_localidad', $alumno->tutor?->localidad) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -567,12 +568,12 @@
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">CP</label>
-                <input type="text" name="tutor_cp" value="{{ old('tutor_cp') }}" maxlength="5"
+                <input type="text" name="tutor_cp" value="{{ old('tutor_cp', $alumno->tutor?->cp) }}" maxlength="5"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Colonia</label>
-                <input type="text" name="tutor_colonia" value="{{ old('tutor_colonia') }}"
+                <input type="text" name="tutor_colonia" value="{{ old('tutor_colonia', $alumno->tutor?->colonia) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -581,17 +582,17 @@
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div class="col-span-1">
                 <label class="block text-xs font-medium text-gray-600 mb-1">Calle</label>
-                <input type="text" name="tutor_calle" value="{{ old('tutor_calle') }}"
+                <input type="text" name="tutor_calle" value="{{ old('tutor_calle', $alumno->tutor?->calle) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Núm. Ext.</label>
-                <input type="text" name="tutor_num_ext" value="{{ old('tutor_num_ext') }}"
+                <input type="text" name="tutor_num_ext" value="{{ old('tutor_num_ext', $alumno->tutor?->num_ext) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Núm. Int.</label>
-                <input type="text" name="tutor_num_int" value="{{ old('tutor_num_int') }}"
+                <input type="text" name="tutor_num_int" value="{{ old('tutor_num_int', $alumno->tutor?->num_int) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -600,17 +601,17 @@
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Fijo</label>
-                <input type="text" name="tutor_tel_fijo" value="{{ old('tutor_tel_fijo') }}"
+                <input type="text" name="tutor_tel_fijo" value="{{ old('tutor_tel_fijo', $alumno->tutor?->tel_fijo) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Celular</label>
-                <input type="text" name="tutor_tel_celular" value="{{ old('tutor_tel_celular') }}"
+                <input type="text" name="tutor_tel_celular" value="{{ old('tutor_tel_celular', $alumno->tutor?->tel_celular) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">E-mail</label>
-                <input type="email" name="tutor_email" value="{{ old('tutor_email') }}"
+                <input type="email" name="tutor_email" value="{{ old('tutor_email', $alumno->tutor?->email) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -619,12 +620,12 @@
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Ocupación</label>
-                <input type="text" name="tutor_ocupacion" value="{{ old('tutor_ocupacion') }}"
+                <input type="text" name="tutor_ocupacion" value="{{ old('tutor_ocupacion', $alumno->tutor?->ocupacion) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Horario</label>
-                <input type="text" name="tutor_horario" value="{{ old('tutor_horario') }}"
+                <input type="text" name="tutor_horario" value="{{ old('tutor_horario', $alumno->tutor?->horario) }}"
                     placeholder="Ej. 8:00 - 17:00"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
@@ -634,17 +635,17 @@
         <div class="grid grid-cols-3 gap-4 mb-2">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Tel. Trabajo</label>
-                <input type="text" name="tutor_tel_trabajo" value="{{ old('tutor_tel_trabajo') }}"
+                <input type="text" name="tutor_tel_trabajo" value="{{ old('tutor_tel_trabajo', $alumno->tutor?->tel_trabajo) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Ext.</label>
-                <input type="text" name="tutor_ext_trabajo" value="{{ old('tutor_ext_trabajo') }}"
+                <input type="text" name="tutor_ext_trabajo" value="{{ old('tutor_ext_trabajo', $alumno->tutor?->ext_trabajo) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">E-mail Trabajo</label>
-                <input type="email" name="tutor_email_trabajo" value="{{ old('tutor_email_trabajo') }}"
+                <input type="email" name="tutor_email_trabajo" value="{{ old('tutor_email_trabajo', $alumno->tutor?->email_trabajo) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -662,13 +663,13 @@
                 <select name="entidad_fed_registro" class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     <option value="">Seleccionar</option>
                     @foreach($estados as $estado)
-                        <option value="{{ $estado }}" {{ old('entidad_fed_registro')==$estado ? 'selected' : '' }}>{{ $estado }}</option>
+                        <option value="{{ $estado }}" {{ old('entidad_fed_registro', $alumno->documentoProbatorio?->entidad_fed_registro)==$estado ? 'selected' : '' }}>{{ $estado }}</option>
                     @endforeach
                 </select>
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Municipio de Registro <span class="text-gray-400">(2)</span></label>
-                <input type="text" name="municipio_registro" value="{{ old('municipio_registro') }}"
+                <input type="text" name="municipio_registro" value="{{ old('municipio_registro', $alumno->documentoProbatorio?->municipio_registro) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
@@ -676,7 +677,7 @@
                 <select name="año_registro" class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     <option value="">Seleccionar</option>
                     @for($y = date('Y'); $y >= 1990; $y--)
-                        <option value="{{ $y }}" {{ old('año_registro')==$y ? 'selected' : '' }}>{{ $y }}</option>
+                        <option value="{{ $y }}" {{ old('año_registro', $alumno->documentoProbatorio?->año_registro)==$y ? 'selected' : '' }}>{{ $y }}</option>
                     @endfor
                 </select>
             </div>
@@ -686,74 +687,74 @@
         <div class="grid grid-cols-4 gap-3 mb-4 border rounded-lg p-3 bg-gray-50 text-xs font-semibold">
             <label class="flex items-center gap-2 cursor-pointer">
                 <input type="radio" name="tipo_documento" value="acta_nacimiento"
-                    {{ old('tipo_documento')=='acta_nacimiento' ? 'checked' : '' }}
+                    {{ old('tipo_documento', $alumno->documentoProbatorio?->tipo_documento)=='acta_nacimiento' ? 'checked' : '' }}
                     onchange="cambiarDocumento('acta_nacimiento')">
                 ACTA DE NACIMIENTO
             </label>
             <label class="flex items-center gap-2 cursor-pointer">
                 <input type="radio" name="tipo_documento" value="documento_migratorio"
-                    {{ old('tipo_documento')=='documento_migratorio' ? 'checked' : '' }}
+                    {{ old('tipo_documento', $alumno->documentoProbatorio?->tipo_documento)=='documento_migratorio' ? 'checked' : '' }}
                     onchange="cambiarDocumento('documento_migratorio')">
                 DOCUMENTO MIGRATORIO
             </label>
             <label class="flex items-center gap-2 cursor-pointer">
                 <input type="radio" name="tipo_documento" value="naturalizacion_sre"
-                    {{ old('tipo_documento')=='naturalizacion_sre' ? 'checked' : '' }}
+                    {{ old('tipo_documento', $alumno->documentoProbatorio?->tipo_documento)=='naturalizacion_sre' ? 'checked' : '' }}
                     onchange="cambiarDocumento('naturalizacion_sre')">
                 DOCUMENTO DE NATURALIZACIÓN DE LA SRE
             </label>
             <label class="flex items-center gap-2 cursor-pointer">
                 <input type="radio" name="tipo_documento" value="ficha_signaletica"
-                    {{ old('tipo_documento')=='ficha_signaletica' ? 'checked' : '' }}
+                    {{ old('tipo_documento', $alumno->documentoProbatorio?->tipo_documento)=='ficha_signaletica' ? 'checked' : '' }}
                     onchange="cambiarDocumento('ficha_signaletica')">
                 FICHA SIGNALÉTICA
             </label>
         </div>
 
         {{-- Campos dinámicos según tipo --}}
-        <div id="campos_acta" class="{{ old('tipo_documento')=='acta_nacimiento' ? '' : 'hidden' }} grid grid-cols-3 gap-4 mb-4">
+        <div id="campos_acta" class="{{ old('tipo_documento', $alumno->documentoProbatorio?->tipo_documento)=='acta_nacimiento' ? '' : 'hidden' }} grid grid-cols-3 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">No. de Libro <span class="text-gray-400">(4)</span></label>
-                <input type="text" name="num_libro" value="{{ old('num_libro') }}"
+                <input type="text" name="num_libro" value="{{ old('num_libro', $alumno->documentoProbatorio?->num_libro) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">No. de Acta</label>
-                <input type="text" name="num_acta" value="{{ old('num_acta') }}"
+                <input type="text" name="num_acta" value="{{ old('num_acta', $alumno->documentoProbatorio?->num_acta) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">CRIP</label>
-                <input type="text" name="crip" value="{{ old('crip') }}"
+                <input type="text" name="crip" value="{{ old('crip', $alumno->documentoProbatorio?->crip) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
 
-        <div id="campos_migratorio" class="{{ old('tipo_documento')=='documento_migratorio' ? '' : 'hidden' }} grid grid-cols-2 gap-4 mb-4">
+        <div id="campos_migratorio" class="{{ old('tipo_documento', $alumno->documentoProbatorio?->tipo_documento)=='documento_migratorio' ? '' : 'hidden' }} grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">No. Registro Nacional de Extranjeros <span class="text-gray-400">(5)</span></label>
-                <input type="text" name="num_registro_extranjeros" value="{{ old('num_registro_extranjeros') }}"
+                <input type="text" name="num_registro_extranjeros" value="{{ old('num_registro_extranjeros', $alumno->documentoProbatorio?->num_registro_extranjeros) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
 
-        <div id="campos_naturalizacion" class="{{ old('tipo_documento')=='naturalizacion_sre' ? '' : 'hidden' }} grid grid-cols-2 gap-4 mb-4">
+        <div id="campos_naturalizacion" class="{{ old('tipo_documento', $alumno->documentoProbatorio?->tipo_documento)=='naturalizacion_sre' ? '' : 'hidden' }} grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Folio de la Carta <span class="text-gray-400">(6)</span></label>
-                <input type="text" name="folio_carta" value="{{ old('folio_carta') }}"
+                <input type="text" name="folio_carta" value="{{ old('folio_carta', $alumno->documentoProbatorio?->folio_carta) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
 
-        <div id="campos_signaletica" class="{{ old('tipo_documento')=='ficha_signaletica' ? '' : 'hidden' }} grid grid-cols-2 gap-4 mb-4">
+        <div id="campos_signaletica" class="{{ old('tipo_documento', $alumno->documentoProbatorio?->tipo_documento)=='ficha_signaletica' ? '' : 'hidden' }} grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">No. de Juzgado <span class="text-gray-400">(7)</span></label>
-                <input type="text" name="num_juzgado" value="{{ old('num_juzgado') }}"
+                <input type="text" name="num_juzgado" value="{{ old('num_juzgado', $alumno->documentoProbatorio?->num_juzgado) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Folio de la Ficha</label>
-                <input type="text" name="folio_ficha" value="{{ old('folio_ficha') }}"
+                <input type="text" name="folio_ficha" value="{{ old('folio_ficha', $alumno->documentoProbatorio?->folio_ficha) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -762,7 +763,7 @@
         <div class="mt-3">
             <label class="flex items-center gap-2 text-xs font-semibold cursor-pointer border rounded px-3 py-2 w-fit bg-gray-50">
                 <input type="radio" name="tipo_documento" value="no_entrego"
-                    {{ old('tipo_documento')=='no_entrego' ? 'checked' : '' }}
+                    {{ old('tipo_documento', $alumno->documentoProbatorio?->tipo_documento)=='no_entrego' ? 'checked' : '' }}
                     onchange="cambiarDocumento('no_entrego')">
                 NO ENTREGÓ DOCUMENTO PROBATORIO <span class="text-gray-400 ml-1">(8)</span>
             </label>
@@ -770,7 +771,7 @@
 
         <div class="mt-4">
             <label class="block text-xs font-medium text-gray-600 mb-1">Observaciones</label>
-            <input type="text" name="doc_observaciones" value="{{ old('doc_observaciones') }}"
+            <input type="text" name="doc_observaciones" value="{{ old('doc_observaciones', $alumno->documentoProbatorio?->observaciones) }}"
                 class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
         </div>
     </div>
@@ -794,12 +795,12 @@
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">Nombre de la Escuela *</label>
-                <input type="text" name="nombre_escuela" value="{{ old('nombre_escuela', 'Prof. Nicolás Reyes Alegre') }}"
+                <input type="text" name="nombre_escuela" value="{{ old('nombre_escuela', $alumno->escuela?->nombre_escuela) }}"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">CCT</label>
-                <input type="text" name="cct" value="{{ old('cct') }}" placeholder="Ej. 21DPR0001A"
+                <input type="text" name="cct" value="{{ old('cct', $alumno->escuela?->cct) }}" placeholder="Ej. 21DPR0001A"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -808,9 +809,9 @@
                 <label class="block text-xs font-medium text-gray-600 mb-1">Turno</label>
                 <select name="turno" class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     <option value="">Seleccionar</option>
-                    <option value="matutino" {{ old('turno')=='matutino' ? 'selected' : '' }}>Matutino</option>
-                    <option value="vespertino" {{ old('turno')=='vespertino' ? 'selected' : '' }}>Vespertino</option>
-                    <option value="nocturno" {{ old('turno')=='nocturno' ? 'selected' : '' }}>Nocturno</option>
+                    <option value="matutino" {{ old('turno', $alumno->escuela?->turno)=='matutino' ? 'selected' : '' }}>Matutino</option>
+                    <option value="vespertino" {{ old('turno', $alumno->escuela?->turno)=='vespertino' ? 'selected' : '' }}>Vespertino</option>
+                    <option value="nocturno" {{ old('turno', $alumno->escuela?->turno)=='nocturno' ? 'selected' : '' }}>Nocturno</option>
                 </select>
             </div>
             <div>
@@ -818,7 +819,7 @@
                 <select name="grado" id="select_grado" class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     <option value="">Seleccionar</option>
                     @foreach($gradosPorNivel[$nivelActual] as $grado)
-                        <option value="{{ $grado }}" {{ old('grado')==$grado ? 'selected' : '' }}>{{ $grado }}</option>
+                        <option value="{{ $grado }}" {{ old('grado', $alumno->escuela?->grado)==$grado ? 'selected' : '' }}>{{ $grado }}</option>
                     @endforeach
                 </select>
             </div>
@@ -827,13 +828,13 @@
                 <select name="grupo" class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     <option value="">Seleccionar</option>
                     @foreach($grupos as $grupo)
-                        <option value="{{ $grupo }}" {{ old('grupo')==$grupo ? 'selected' : '' }}>{{ $grupo }}</option>
+                        <option value="{{ $grupo }}" {{ old('grupo', $alumno->escuela?->grupo)==$grupo ? 'selected' : '' }}>{{ $grupo }}</option>
                     @endforeach
                 </select>
             </div>
             <div>
                 <label class="block text-xs font-medium text-gray-600 mb-1">ZE</label>
-                <input type="text" name="ze" value="{{ old('ze') }}" placeholder="Zona Escolar"
+                <input type="text" name="ze" value="{{ old('ze', $alumno->escuela?->ze) }}" placeholder="Zona Escolar"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
         </div>
@@ -842,7 +843,7 @@
     {{-- BOTONES --}}
     <div class="flex gap-3 justify-end mb-8">
         <a href="{{ route('alumnos.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-lg text-sm">Cancelar</a>
-        <button type="submit" class="bg-blue-900 hover:bg-blue-800 text-white px-6 py-2 rounded-lg text-sm font-semibold">Guardar Cédula</button>
+        <button type="submit" class="bg-blue-900 hover:bg-blue-800 text-white px-6 py-2 rounded-lg text-sm font-semibold">Guardar Cambios</button>
     </div>
 
     </form>
